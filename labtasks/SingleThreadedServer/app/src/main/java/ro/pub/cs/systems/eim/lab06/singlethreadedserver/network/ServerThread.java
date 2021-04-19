@@ -50,12 +50,18 @@ public class ServerThread extends Thread {
             while (isRunning) {
                 Socket socket = serverSocket.accept();
                 Log.v(Constants.TAG, "Connection opened with " + socket.getInetAddress() + ":" + socket.getLocalPort());
-
-                // TODO exercise 5c
-                // simulate the fact the communication routine between the server and the client takes 3 seconds
-
                 PrintWriter printWriter = Utilities.getWriter(socket);
                 printWriter.println(serverTextEditText.getText().toString());
+                // TODO exercise 5c
+                // simulate the fact the communication routine between the server and the client takes 3 seconds
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException interruptedException) {
+                    Log.e(Constants.TAG, interruptedException.getMessage());
+                    if (Constants.DEBUG) {
+                        interruptedException.printStackTrace();
+                    }
+                }
                 socket.close();
                 Log.v(Constants.TAG, "Connection closed");
 
